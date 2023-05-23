@@ -13,11 +13,9 @@ class Charge
 
     public :
 
-    Charge(float shunt_resistance, float max_expected_amps, uint8_t address, 
-    int voltage_range, int gain, int bus_adc, int shunt_adc);
+    Charge(uint8_t address);
 
     void lire();
-    void configure(int voltage_range, int gain, int bus_adc, int shunt_adc);
     float getTension();
     float getCourant();
 

@@ -6,14 +6,21 @@ int main()
 {
     Interrupteur tuInterrupteur(23);
 
+    char reponse; 
     while(true)
     {
-        usleep(3000000);
-        tuInterrupteur.actionner();
-        std::cout << "GPIO ouverte" << std::endl;
-        usleep(3000000);
-        tuInterrupteur.desactiver();
-        std::cout << "GPIO fermée" << std::endl;
+        std::cout<<"Voulez vous actionner l'interrutpeur ? o/n"<<std::endl;
+        std::cin>>reponse;
+        if(reponse == 'o')
+        {
+            tuInterrupteur.actionner();
+            std::cout << "GPIO ouverte" << std::endl;
+        }
+        else
+        {
+            tuInterrupteur.desactiver();
+            std::cout << "GPIO fermée" << std::endl;
+        }
     }
     return 0;
 }

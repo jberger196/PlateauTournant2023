@@ -1,15 +1,13 @@
 #include "../include/Charge.hpp"
 #include <unistd.h>
 
-Charge::Charge(float shunt_resistance, float max_expected_amps, uint8_t address, 
-int voltage_range, int gain, int bus_adc, int shunt_adc)
+Charge::Charge(uint8_t address)
 {
-    leCapteur = new INA219(shunt_resistance, max_expected_amps, address);
-    leCapteur->configure(voltage_range, gain, bus_adc, shunt_adc);
+    leCapteur = new INA219(0.1, 2, address);
+    leCapteur->configure(RANGE_16V, GAIN_8_320MV, ADC_12BIT, ADC_12BIT);
 }
 
 void Charge::lire(){
-
     laTension = leCapteur->voltage();
     leCourant = leCapteur->current()/1000;
     sleep(1);
