@@ -4,30 +4,47 @@
 using namespace GPIO;
 using namespace std;
 
-Moteur::Moteur(unsigned int pinEnable, unsigned int pinPhase, unsigned int range, unsigned int ratio){ //unsigned short int est codé sur 2 octets, enable et phase sont le numéro des pins utilisées
+Moteur::Moteur(unsigned int pinEnable, unsigned int pinPhase, unsigned int periode, unsigned int rapportCyclique){ //unsigned short int est codé sur 2 octets, enable et phase sont le numéro des pins utilisées
     this->objPhase = new DigitalOut(pinPhase); //objet permettant de changer le sens de rotation du moteur, prend en argument la pin
     this->objEnablePWM = new PWMOut(pinEnable); //objet permettant de contrôller le PWM moteur, prend en argument la pin
-    this->objEnablePWM->set_range(range); //range = période du signal (précision du PWM)
-    this->ratio = ratio; //attribut ratio
+    this->objEnablePWM->set_range(periode); //range = période du signal (précision du PWM)
+    this->rapportCyclique = rapportCyclique; //attribut ratio
 }
 
 Moteur::~Moteur(){
     delete this->objPhase;
     delete this->objEnablePWM;
-    cout << "Destruction de l'objet" << endl;
 }
 
 //1000000000
-void Moteur::tournerHoraire(unsigned int ratio){ //fais tourner le moteur dans un sens avec l'attribut ratio
-    this->estEnMouvement = true; //le plateau est en mouvement
-    this->objEnablePWM->set_ratio(ratio); 
-    this->objPhase->on(); //allumer phase (sens rotation)  
+void Moteur::tournerHoraire(unsigned int rapportCyclique){ //fais tourner le moteur dans un sens avec l'attribut ratio
+    if(this->estEnMouvement == false){ //si le plateau n'est pas en mouvement
+        this->estEnMouvement = true; //le plateau est en mouvement
+        this->objPhase->on(); //allumer phase (sens rotation)
+        this->objEnablePWM->set_ratio(rapportCyclique);
+    }
+    else{
+        this->objEnablePWM->set_ratio(0);
+        usleep(100000);
+        this->estEnMouvement = true; //le plateau est en mouvement
+        this->objPhase->on(); //allumer phase (sens rotation)
+        this->objEnablePWM->set_ratio(rapportCyclique);
+    }
 }
 
-void Moteur::tournerAntiHoraire(unsigned int ratio){ //fais tourner le moteur dans l'autre sens avec l'attribut ratio
-    this->estEnMouvement = true; //le plateau est en mouvement
-    this->objEnablePWM->set_ratio(ratio);
-    this->objPhase->off(); //éteindre phase (sens rotation)  
+void Moteur::tournerAntiHoraire(unsigned int rapportCyclique){ //fais tourner le moteur dans l'autre sens avec l'attribut ratio
+    if(this->estEnMouvement == false){  
+        this->estEnMouvement = true; //le plateau est en mouvement
+        this->objPhase->off(); //éteindre phase (sens rotation) 
+        this->objEnablePWM->set_ratio(rapportCyclique);
+    }
+    else{
+        this->objEnablePWM->set_ratio(0);
+        usleep(100000);
+        this->estEnMouvement = true; //le plateau est en mouvement
+        this->objPhase->off(); //éteindre phase (sens rotation) 
+        this->objEnablePWM->set_ratio(rapportCyclique);
+    }
 }
 
 void Moteur::arretMoteur(){ //eteint phase et enable
@@ -42,9 +59,9 @@ void Moteur::modifierEtatPhase(bool etat){ //modifie l'état de phase
 }
 
 void Moteur::modifierValeurRatio(unsigned int ratio){ //modifie la valeur du ratio du PWM, voir si le traitement pour estEnMouvement est à faire ici ?
-    this->ratio = ratio;
-    this->objEnablePWM->set_ratio(ratio);
-    if(ratio != 0){ //si le PWM n'est pas nul
+    this->rapportCyclique = rapportCyclique;
+    this->objEnablePWM->set_ratio(rapportCyclique);
+    if(rapportCyclique != 0){ //si le PWM n'est pas nul
         this->estEnMouvement = true;
     }
     else{ //si le PWM est nul
@@ -61,9 +78,9 @@ void Moteur::setEstEnMouvement(bool etat){ //setter setEstEnMouvement, pas vraim
 }
 
 int Moteur::getRatio(){ //getter de l'attribut ratio, pas vraiment utile
-    return this->ratio;
+    return this->rapportCyclique;
 }
 
-void Moteur::setRatio(unsigned int ratio){ //setter de l'attribut ratio, pas vraiment utile
-    this->ratio = ratio;
+void Moteur::setRatio(unsigned int rapportCyclique){ //setter de l'attribut ratio, pas vraiment utile
+    this->rapportCyclique = rapportCyclique;
 }
