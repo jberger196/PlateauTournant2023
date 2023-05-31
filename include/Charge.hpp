@@ -1,4 +1,4 @@
-#include "../src/ina219.h"
+#include "ina219.h"
 
 
 class Charge

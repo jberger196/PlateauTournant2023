@@ -4,7 +4,7 @@
 
 int main()
 {
-    Charge tuCharge(0.1, 2.0, 0x40, RANGE_16V,GAIN_8_320MV,ADC_12BIT,ADC_12BIT);
+    Charge tuCharge(0x40);
 
     while(true)
     {

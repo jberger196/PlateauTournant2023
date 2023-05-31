@@ -1,4 +1,4 @@
-#include "../include/cppgpio/output.hpp"
+#include "cppgpio/output.hpp"
 
 class Interrupteur
 {

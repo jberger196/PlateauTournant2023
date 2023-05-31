@@ -1,5 +1,4 @@
 #include "ina219.h"
-#include "INA219.cpp"
 #include <iostream>
 #include <unistd.h> // for usleep
 

@@ -1,4 +1,4 @@
-#include "ina219.h"
+#include "../include/ina219.h"
 
 #include <unistd.h>
 #include <fcntl.h>
