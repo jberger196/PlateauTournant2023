@@ -1,31 +1,26 @@
 #include "../include/Ares.h"
 
-Ares::Ares()
+Ares::Ares(Cube aCube, Signalement aSignalement, Consigne aConsigne)
 {
-_lAlimentationB = new AlimentationBatterie(23, 0x44);
+
 }
 
 void Ares::commuterAlimentation()
 {
-
+    _lAlimentationB->alimenter();
 }
 
 void Ares::mesurerCourantCharge()
 {
-_lAlimentationB->releverDonneesCharge();
+    _lAlimentationB->releverDonneesCharge();
 }
 
 void Ares::alerteChargeOn()
 {
-
+    
 }
 
 void Ares::alerteChargeOff()
-{
-
-}
-
-void Ares::lireDate()
 {
 
 }
@@ -42,7 +37,7 @@ void Ares::tournerAntiHoraire()
 
 void Ares::tournerHoraire()
 {
-    
+
 }
 Ares::~Ares()
 {

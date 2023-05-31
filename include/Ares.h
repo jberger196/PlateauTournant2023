@@ -1,5 +1,3 @@
-#include <exception>
-using namespace std;
 
 #ifndef __Ares_h__
 #define __Ares_h__
@@ -26,6 +24,7 @@ class Ares
 	private: Position* _laPosition;
     private: Consigne* _laConsigne;
     private: Signalement* _leSignalement;
+	private: Journal* _leJournal;
 
 	public: void commuterAlimentation();
 
@@ -34,8 +33,6 @@ class Ares
 	public: void alerteChargeOn();
 
 	public: void alerteChargeOff();
-
-	public: void lireDate();
 
     public: void tournerHoraire();
 
