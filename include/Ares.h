@@ -25,10 +25,9 @@ class Ares
     private: Consigne* _laConsigne;
     private: Signalement* _leSignalement;
 	private: Journal* _leJournal;
-
-	public: void commuterAlimentation();
-
-	public: void mesurerCourantCharge();
+	private: float courant;
+	private: float seuiCourantChargeInvalide;
+	private: float seuilCourantChargeValide;
 
 	public: void alerteChargeOn();
 
@@ -39,6 +38,10 @@ class Ares
     public: void tournerAntiHoraire();
 
     public: void immobiliser();
+
+	public: void alimenterBatterie();
+
+	public: thread tAlimenterBatterie();
 
 	public: Ares(Cube aCube, Signalement aSignalement, Consigne aConsigne);
 

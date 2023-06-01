@@ -9,6 +9,8 @@ Consigne::Consigne()
 	seuilAbscence = 10000;
 	ValMinMot = 35;	 // en mA et en valeure absolue
 	ValMaxMot = 230; // en mA et en valeur absolue
+	seuilCourantChargeInvalide = 0.05;
+	seuilCourantChargeValide = 0.08;
 }
 
 bool Consigne::obtenirSeuilCourantMoteur()
@@ -41,18 +43,26 @@ Consigne::~Consigne()
 
 void Consigne::setValMinMot(int val)
 {
-	return this->setValMinMot;
+
 }
 
 void Consigne::setValMaxMot(int val)
 {
-	return this->setValMaxMot;
+
 }
 
 int Consigne::getValMinMot()
 {
+		return this->ValMinMot;
 }
 
 int Consigne::getValMaxMot()
 {
+		return this->ValMaxMot;
+}
+float Consigne::getSeuilCourantChargeInvalide(){
+	return 	this->seuilCourantChargeInvalide;
+}
+float Consigne::getSeuilCourantChargeValide(){
+	return this->seuilCourantChargeValide;
 }

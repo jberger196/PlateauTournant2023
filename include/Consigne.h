@@ -11,6 +11,8 @@ private:
     float seuilAbscence;
     int ValMinMot;
     int ValMaxMot;
+    float seuilCourantChargeValide;
+    float seuilCourantChargeInvalide;
 
 public:
     Consigne();
@@ -23,6 +25,8 @@ public:
     void setValMaxMot(int val);
     int getValMinMot();
     int getValMaxMot();
+    float getSeuilCourantChargeValide();
+    float getSeuilCourantChargeInvalide();
     ~Consigne();
 
 };

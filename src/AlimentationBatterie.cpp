@@ -1,4 +1,5 @@
 #include "../include/AlimentationBatterie.h"
+#include <unistd.h>
 
 AlimentationBatterie::AlimentationBatterie(unsigned int pin, uint8_t address)
 {
@@ -14,6 +15,7 @@ void AlimentationBatterie::alimenter()
 
 void AlimentationBatterie::releverDonneesCharge()
 {
+    usleep(10000);
     laCharge->lire();
 }
 
