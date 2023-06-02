@@ -23,6 +23,13 @@ thread Cerbere::tVerfierCourant(){
 }
 
 
+thread Cerbere::tVerfierCourant(){
+    return thread([this]{
+        verifierCourant();
+    });
+}
+
+
 void Cerbere::verifierCourant(){
     while (true){
 
