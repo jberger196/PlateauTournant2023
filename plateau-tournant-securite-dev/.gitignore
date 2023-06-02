@@ -1,0 +1,20 @@
+# Dependency directory
+node_modules/
+
+# Visual Studio Code settings
+.vscode/
+
+# macOS Desktop Services Store files
+.DS_Store
+
+# Hermes TODO list
+hermes/TODO.md
+
+# Hermes logs
+hermes/logs/*
+
+# Hermes build generated files
+hermes/build/*
+
+# Hermes public generated files
+hermes/public/*

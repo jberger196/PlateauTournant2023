@@ -9,11 +9,11 @@ using namespace GPIO;
 int main(){
 
 
-    unsigned int signal1 = 3;   //variable afin de modifier quel GPIO utiliser plus ergonomiquement
-    unsigned int signal2 = 4;   //variable afin de modifier quel GPIO utiliser plus ergonomiquement
+    unsigned int signal1 = 6;   //variable afin de modifier quel GPIO utiliser plus ergonomiquement
+    unsigned int signal2 = 5;   //variable afin de modifier quel GPIO utiliser plus ergonomiquement
 
     signalCube signal(signal1,signal2,GPIO_PULL::OFF);     //paramètre signalCube pour signaler les fronts montants et descandants sur la broche 3 et 4
 
     signal.start();          //lance la détéction des fronts
-
+while(1){}
 }

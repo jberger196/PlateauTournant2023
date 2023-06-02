@@ -1,7 +1,7 @@
 #include "cppgpio.hpp" // Inclure la bibliothèque C++ pour les GPIO
 #include <unistd.h>    // Inclure la bibliothèque pour la fonction sleep
 #include "signalCube.hpp"
-#include "simuMoteurSortie.hpp"
+#include "Moteur.hpp"
 
 using namespace GPIO;
 
@@ -30,10 +30,8 @@ void signalCube::triggered(unsigned int gpio)
         }
     }
     else if (signal2.get_pin() == false) // verification du signal2
-    {    unsigned int Ndirec = 6;
-    unsigned int Ndemar = 7;
-    DirectIn direction(Ndirec);
-    DirectIn demarrage(Ndemar);
+    {
+
         if (signal1.get_pin() == true)
         {
             anomalie++;
@@ -50,32 +48,29 @@ void signalCube::triggered(unsigned int gpio)
 
     conforme = true;
 
-    simuMoteurSortie actionRota(bool signal1, bool signal2);
+    Moteur moteur(27, 17);
 
     if (signal1.get_state() == true) // convertion signal vers bouléen
     {
-        signal1 = true; // sens horaire
-                        //apppeler ici la classe simu ou définitive pour controller le moteur
-
+        // sens horaire
+        // apppeler ici la classe simu ou définitive pour controller le moteur
+        moteur.tournerHoraire(0);
     }
     else
     {
-        signal1 = false; // sens anti horaire
-                        //apppeler ici la classe simu ou définitive pour controller le moteur
-
+        // sens anti horaire
+        // apppeler ici la classe simu ou définitive pour controller le moteur
+        moteur.tournerAntiHoraire(0);
     }
 
-    if (signal2.get_state() == true) // convertion signal vers bouléen
+    if (signal2.get_state() == false) // convertion signal vers bouléen
+
+        if (moteur.getEstEnMouvement() == true)
+        {
     
-    {
-        signal2 = true; // démarrer moteur
-                       //apppeler ici la classe simu ou définitive pour controller le moteur
+        // moteur immobile
+                         // apppeler ici la classe simu ou définitive pour controller le moteur
+        moteur.arretMoteur();
 
-    }
-    else
-    {
-        signal2 = false; // moteur immobile
-                         //apppeler ici la classe simu ou définitive pour controller le moteur
-
-    }
+        }
 }
