@@ -1,7 +1,7 @@
 #include <exception>
 using namespace std;
 
-#include "../include/Consigne.h"
+#include "../include/Consigne.hpp"
 
 Consigne::Consigne()
 {

@@ -1,52 +1,50 @@
 #include "../include/Ares.h"
-#include "../include/Cerbere.hpp"
-#include "../include/Moteur.h"
-#include "../include/HautParleur.h"
-#include "../include/Signalisation.h"
-#include "../include/AlimentationBatterie.h"
-#include "../include/Sauvegarde.h"
-#include "../include/Position.h"
-#include "../include/Cube.h"
-#include "../include/Signalement.h"
-#include "../include/Consigne.hpp"
+#include <unistd.h>
 
-using namespace std;
-
-void Ares::commuterAlimentation() {
+Ares::Ares(Cube aCube, Signalement aSignalement, Consigne aConsigne)
+{
+_lAlimentationB = new AlimentationBatterie(23,0x44);
+}
+void Ares::alerteChargeOn(){
+    
+}
+void Ares::alerteChargeOff(){
 
 }
-
-void Ares::mesurerCourantCharge() {
-
-}
-
-void Ares::alerteChargeOn() {
-
-}
-
-void Ares::alerteChargeOff() {
-
-}
-
-void Ares::lireDate() {
-
-}
-
-
-void Ares::tournerHoraire(){
-	_lePilote -> tournerHoraire(5);
-}
-
-void Ares::tournerAntiHoraire(){
-	_lePilote ->  tournerAntiHoraire(5);
-}
-
 void Ares::immobiliser(){
-	_lePilote ->  arretMoteur();
-	thread tAlimenterBatterie -> alimenter();
-	tAlimenterBatterie.detach;
-}
 
-
-Ares::Ares(Cube aCube, Signalement aSignalement, Consigne aConsigne) {
 }
+void Ares::tournerAntiHoraire(){
+
+}
+void Ares::tournerHoraire(){
+
+}
+void Ares::alimenterBatterie(){
+    usleep(2000000);
+    _lAlimentationB->alimenter();
+    _lAlimentationB->releverDonneesCharge();
+    _lAlimentationB->obtenirDonnees();
+    _lAlimentationB->getCourant();
+    if (courant < seuiCourantChargeInvalide){
+        this->alerteChargeOff();
+        _lAlimentationB->couper();
+    }
+    else{
+        while(courant > seuilCourantChargeValide){
+            /*this->alerteChargeOn();*/
+            _lAlimentationB->releverDonneesCharge();
+            _lAlimentationB->obtenirDonnees();
+            _lAlimentationB->getCourant();
+        }
+    }
+    _lAlimentationB->couper();
+}
+thread Ares::tAlimenterBatterie()
+{
+    return thread([this]{
+        alimenterBatterie();
+    });
+}
+Ares::~Ares()
+{
