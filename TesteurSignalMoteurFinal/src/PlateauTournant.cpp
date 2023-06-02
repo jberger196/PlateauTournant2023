@@ -19,23 +19,25 @@ void PlateauTournant::tournerHoraire()
 	estEnMouvementHoraire = true;	
 	estEnMouvementAntiHoraire = false;
 	
-	thread _lOperation -> tournerHoraire();
-	_lOperation.detach();
-
+	
 	_laSecurite->setFinRotation(false); 
-	_laSecurite->verifierCourant();  
+
+	_lesConsignes->tournerHoraire();
+	thread verifierCourant = _laSecurite->tVerifierCourant();     
+	verifierCourant.detach();  
 			   
 }
 void PlateauTournant::tournerAntiHoraire()
 {
 	estEnMouvementHoraire = false;	
 	estEnMouvementAntiHoraire = true;
-	
-	thread _lOperation -> tournerAntiHoraire();
-	_lOperation.detach();
 
 	_laSecurite->setFinRotation(false); 
-	_laSecurite->verifierCourant();      
+
+	_lOperation->tournerAntiHoraire();
+	thread verifierCourant = _laSecurite->tVerifierCourant();     
+	verifierCourant.detach();
+
 }
 void PlateauTournant::immobiliser()
 {
