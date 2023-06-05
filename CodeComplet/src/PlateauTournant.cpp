@@ -3,44 +3,67 @@
 
 PlateauTournant::PlateauTournant()
 {
-    _leSegmentVol = new Cube(this);
-    _lesConsignes = new Consigne();
-    _lessignalements = new Signalement();
+	_leSegmentVol = new Cube(this);
+	_lesConsignes = new Consigne();
+	_lessignalements = new Signalement();
 	leJournal = new Journal("/home/pi/valeurs/journal.db");
-    _lOperation = new Ares(_lessignalements, _lesConsignes, leJournal);	
-    _laSecurite = new Cerbere(_lesConsignes, _lessignalements, leJournal);	
+	_lOperation = new Ares(_lessignalements, _lesConsignes, leJournal);
+	_laSecurite = new Cerbere(_lesConsignes, _lessignalements, leJournal);
 	estEnMouvementHoraire = false;
-	estEnMouvementAntiHoraire = false;	   
+	estEnMouvementAntiHoraire = false;
 }
 PlateauTournant::~PlateauTournant()
 {
 }
 void PlateauTournant::tournerHoraire()
 {
-	estEnMouvementHoraire = true;	
-	estEnMouvementAntiHoraire = false;
-	_laSecurite->setFinRotation(false); 
-	_lOperation->tournerHoraire();
-	thread verifierCourant = _laSecurite->tVerifierCourant();     
-	verifierCourant.detach();  
-			   
+	if (_lessignalements->getAlertePresence())
+	{
+	}
+	else
+	{
+		if (_lessignalements->getAlerteFixation())
+		{
+		}
+		else
+		{
+			estEnMouvementHoraire = true;
+			estEnMouvementAntiHoraire = false;
+			_laSecurite->setFinRotation(false);
+			_lOperation->tournerHoraire();
+			thread verifierCourant = _laSecurite->tVerifierCourant();
+			verifierCourant.detach();
+		}
+	}
 }
 void PlateauTournant::tournerAntiHoraire()
 {
-	estEnMouvementHoraire = false;	
-	estEnMouvementAntiHoraire = true;
-	_laSecurite->setFinRotation(false); 
-	_lOperation->tournerAntiHoraire();
-	thread verifierCourant = _laSecurite->tVerifierCourant();     
-	verifierCourant.detach();    
+	if (_lessignalements->getAlertePresence())
+	{
+	}
+	else
+	{
+		if (_lessignalements->getAlerteFixation())
+		{
+		}
+		else
+		{
+			estEnMouvementHoraire = false;
+			estEnMouvementAntiHoraire = true;
+			_laSecurite->setFinRotation(false);
+			_lOperation->tournerAntiHoraire();
+			thread verifierCourant = _laSecurite->tVerifierCourant();
+			verifierCourant.detach();
+		}
+	}
 }
 void PlateauTournant::immobiliser()
 {
-	estEnMouvementHoraire = false;	
+	estEnMouvementHoraire = false;
 
-	estEnMouvementAntiHoraire = false; 
+	estEnMouvementAntiHoraire = false;
 	_lOperation->immobiliser();
-	_laSecurite->setFinRotation(true);   
+	_laSecurite->setFinRotation(true);
 }
 void PlateauTournant::signalerProbleme(int code)
 {
@@ -72,25 +95,25 @@ void PlateauTournant::setCerbere(Cerbere *_laSecurite)
 }
 void PlateauTournant::setCube(Cube *_leSegmentVol)
 {
-	this->_leSegmentVol=_leSegmentVol;
+	this->_leSegmentVol = _leSegmentVol;
 }
 void PlateauTournant::setAres(Ares *_lOperation)
 {
-	this->_lOperation=_lOperation;
+	this->_lOperation = _lOperation;
 }
 void PlateauTournant::setConsigne(Consigne *_lesConsignes)
 {
-	this->_lesConsignes=_lesConsignes;
+	this->_lesConsignes = _lesConsignes;
 }
 void PlateauTournant::setSignalement(Signalement *_lessignalements)
 {
-	this->_lessignalements=_lessignalements;
+	this->_lessignalements = _lessignalements;
 }
 bool PlateauTournant::getEstEnMouvementHoraire()
 {
-    return estEnMouvementHoraire;
+	return estEnMouvementHoraire;
 }
 bool PlateauTournant::getEstEnMouvementAntiHoraire()
 {
-    return estEnMouvementAntiHoraire;
+	return estEnMouvementAntiHoraire;
 }
