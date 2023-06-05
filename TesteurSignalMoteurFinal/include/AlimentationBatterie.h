@@ -1,29 +1,34 @@
-#include <exception>
-#include <vector>
-using namespace std;
 
 #ifndef __AlimentationBatterie_h__
 #define __AlimentationBatterie_h__
 
-// #include "Interrupteur.h"
-#include "Charge.h"
-
-class Interrupteur;
-class Charge;
-class AlimentationBatterie;
+#include "Charge.hpp"
+#include "Interrupteur.h"
 
 class AlimentationBatterie
 {
-	private: Interrupteur* _lInterrupteur;
-	private: std::vector<Charge*> _laCharge;
+    private : 
+    Charge *laCharge;
+    Interrupteur *monInterrupteur;
 
-	public: void alimenter();
+    float courant;
+    float tension;
 
-	public: void releverDonneesCharge();
+    public :
 
-	public: void couper();
+    //Pour simplifier le constructeur certains arguments on une valeur par défaut.
+    AlimentationBatterie(unsigned int pin,uint8_t address);
+    void alimenter();
+    void releverDonneesCharge();
+    void couper();
+    void obtenirDonnees();
+    float getCourant();
+    float getTension();
 
-	public: void obtenirDonnees(float& aCourant, float& aTension);
+    ~AlimentationBatterie();
+
+
+
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define __PlateauTournant_h__
 
 #include <string>
+#include <thread>
 using namespace std;
 
 #include "Cerbere.hpp"
@@ -9,6 +10,9 @@ using namespace std;
 #include "Ares.h"
 #include "Consigne.hpp"
 #include "Signalement.h"
+
+class Cube;
+class Ares;
 
 class PlateauTournant
 {
@@ -32,7 +36,7 @@ public:
 	Cerbere *getCerbere();
 	Cube *getCube();
 	Ares *getAres();
-	Consigne *_getConsigne();
+	Consigne *getConsigne();
 	Signalement *getSignalement();
 	void setCerbere(Cerbere *_laSecurite);
 	void setCube(Cube *_leSegmentVol);

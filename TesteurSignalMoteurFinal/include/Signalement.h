@@ -1,35 +1,74 @@
 #include <exception>
+#include <csignal>
 using namespace std;
 
 #ifndef __Signalement_h__
 #define __Signalement_h__
 
-class Signalement;
-
 class Signalement
 {
-	private: bool _alerteMoteur;
-	private: bool _alerteBatterie;
-	private: bool _alerteFixation;
-	private: bool _alertePresence;
+private:
+	bool _alerteMoteur;
+	bool _alerteBatterie;
+	bool _alerteFixation;
+	bool _alertePresence;
+	bool _alerteSignauxNonconformes;
+	bool _alerteOrdreDoubleHoraire;
+	bool _alerteOrdreDoubleAntiHoraire;
+	bool _alerterForcer;
+	bool _alerterConnexionMoteur;		
 
-	public: bool getAlerteMoteur();
+public:
+	static const int SIGNONCONF = 1;
+	static const int SIGNONDOUBLEHOR = 2;
+	static const int SIGNONDOUBEAR = 3;
+	static const int ALERTEMOTEUR = 4;
+	static const int ALERTEBATTERIE = 5;
+	static const int ALERTEFIXATION = 6;
+	static const int ALERTEPRESENCE = 7;
+	static const int ALERTEFORCER = 8;	
+	static const int CONNEXIONMOTEUR = 9;
+public:
+	~Signalement();
 
-	public: void setAlerteMoteur(bool aAlerteMoteur);
+	Signalement();
 
-	public: bool getAlerteBatterie();
+	bool getAlerteMoteur();
 
-	public: void setAlerteBatterie(bool aAlerteBatterie);
+	void setAlerteMoteur(bool aAlerteMoteur);
 
-	public: bool getAlerteFixation();
+	bool getAlerteBatterie();
 
-	public: void setAlerteFixation(bool aAlerteFixation);
+	void setAlerteBatterie(bool aAlerteBatterie);
 
-	public: bool getAlertePresence();
+	bool getAlerteFixation();
 
-	public: void setAlertePresence(bool aAlertePresence);
+	void setAlerteFixation(bool aAlerteFixation);
 
-	public: void signalerProbleme();
+	bool getAlertePresence();
+
+	void setAlertePresence(bool aAlertePresence);
+
+	bool getAlerteForcer();
+
+	void setAlerteForcer(bool aAlerteForcer);	
+
+public:
+	bool getAlerteSignauxNonconformes();
+
+public:
+	bool getAlerteOrdreDoubleHoraire();
+
+public:
+	bool getAlerteOrdreDoubleAntiHorairee();
+	void setAlerteSignauxNonconformese(bool aalerteSignauxNonconformes);
+	void setAlerteOrdreDoubleHoraire(bool alerteOrdreDoubleHoraire);
+	void setAlerteOrdreDoubleAntiHorairee(bool aalerteOrdreDoubleAntiHoraire);
+	void setAlerterConnexionMoteur(bool alerterConnexionMoteur);
+	bool getAlerterConnexionMoteur();	
+
+public:
+	void signalerProbleme(int code);
 };
 
 #endif

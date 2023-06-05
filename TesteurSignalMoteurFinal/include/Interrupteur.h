@@ -1,26 +1,22 @@
-#include <exception>
-using namespace std;
-
 #ifndef __Interrupteur_h__
 #define __Interrupteur_h__
 
-#include "DigitalOut.h"
-
-class DigitalOut;
-class Interrupteur;
+#include "cppgpio/output.hpp"
 
 class Interrupteur
 {
-	private: bool _on;
-	private: DigitalOut _actionneur;
+    private :
+    GPIO::DigitalOut *actionneur;
+    bool on;
 
-	public: void actionner();
+    public : 
+    Interrupteur(unsigned int pin);
+    
+    void actionner();
+    void desactiver();
+    bool getEtat();
 
-	public: void desactiver();
-
-	public: void setActionneur(DigitalOut aActionneur);
-
-	public: DigitalOut getActionneur();
+    ~Interrupteur();
 };
 
 #endif

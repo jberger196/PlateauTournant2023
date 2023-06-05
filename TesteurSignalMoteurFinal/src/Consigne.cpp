@@ -1,26 +1,61 @@
-#include <exception>
+#include <unistd.h>
 using namespace std;
 
 #include "../include/Consigne.hpp"
 
 Consigne::Consigne()
 {
-	seuilPresence = 2800;
-	seuilAbscence = 10000;
-	ValMinMot = 35;	 // en mA et en valeure absolue
-	ValMaxMot = 230; // en mA et en valeur absolue
-	seuilCourantChargeInvalide = 0.05;
+	seuilPresenceMin = 5000;
+	seuilPresenceMax = 15000;
+	seuilAbsence = 20000;
+	seuilForcer = 3000;
+	resitanceProtection = 21000;
+	tensionAlimentation = 5;
+	seuilBlocageMin = 10;
+	seuilBlocageAlerte = 110;
+	seuilBlocageBranchement = 2;
+	seuiCourantChargeInvalide = 0.001;
 	seuilCourantChargeValide = 0.08;
 }
 
-bool Consigne::obtenirSeuilCourantMoteur()
+void Consigne::setValMinMot(float val)
 {
-	throw "Not yet implemented";
+	seuilBlocageMin = val;
 }
 
-bool Consigne::obtenirSeuilsPresence(float &aSeuilMin, float &aSeuilMax)
+void Consigne::setValMaxMot(float val)
 {
-	throw "Not yet implemented";
+	seuilBlocageAlerte = val;
+}
+
+float Consigne::getValMinMot()
+{
+	return seuilBlocageMin;
+}
+
+float Consigne::getValMaxMot()
+{
+	return seuilBlocageAlerte;
+}
+
+float Consigne::getValBranchementMot()
+{
+	return seuilBlocageBranchement;
+}
+
+void Consigne::obtenirSeuilsCourantMoteur(float &seuilBlocageMin, float &seuilBlocageAlerte, float &seuilBlocageBranchement)
+{
+	seuilBlocageMin = this->seuilBlocageMin;
+	seuilBlocageAlerte = this->seuilBlocageAlerte;
+	seuilBlocageBranchement = this->seuilBlocageBranchement;
+}
+
+void Consigne::obtenirSeuilsPresence(float &seuilPresenceCubeMin, float &seuilPresenceCubeMax, float &seuilAbsence, float &seuilForcage)
+{
+	seuilPresenceCubeMin = this->seuilPresenceMin;
+	seuilPresenceCubeMax = this->seuilPresenceMax;
+	seuilAbsence = this->seuilAbsence;
+	seuilForcage = this->seuilForcer;
 }
 
 bool Consigne::lireConsignes()
@@ -30,39 +65,44 @@ bool Consigne::lireConsignes()
 
 float Consigne::getSeuilmin()
 {
-	return seuilPresence;
+	return seuilPresenceMin;
 }
+
+float Consigne::getSeuilPresenceMax()
+{
+	return seuilPresenceMax;
+}
+
 float Consigne::getSeuilmax()
 {
-	return seuilAbscence;
+	return seuilAbsence;
+}
+float Consigne::getSeuilForcer()
+{
+	return seuilForcer;
+}
+float Consigne::getResitanceProtection()
+{
+	return resitanceProtection;
+}
+float Consigne::getTensionAlimentation()
+{
+	return tensionAlimentation;
+}
+
+float Consigne::getSeuiCourantChargeInvalide()
+{
+	return this->seuiCourantChargeInvalide;
+}
+float Consigne::getSeuilCourantChargeValide()
+{
+	return this->seuilCourantChargeValide;
+}
+float Consigne::getConsoOrdinateurBord()
+{
+	return this->consoOrdinateurBord;
 }
 
 Consigne::~Consigne()
 {
-}
-
-void Consigne::setValMinMot(int val)
-{
-
-}
-
-void Consigne::setValMaxMot(int val)
-{
-
-}
-
-int Consigne::getValMinMot()
-{
-		return this->ValMinMot;
-}
-
-int Consigne::getValMaxMot()
-{
-		return this->ValMaxMot;
-}
-float Consigne::getSeuilCourantChargeInvalide(){
-	return 	this->seuilCourantChargeInvalide;
-}
-float Consigne::getSeuilCourantChargeValide(){
-	return this->seuilCourantChargeValide;
 }

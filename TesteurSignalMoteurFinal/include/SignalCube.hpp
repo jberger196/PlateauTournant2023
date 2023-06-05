@@ -9,6 +9,8 @@ using namespace std;
 
 using namespace GPIO;
 
+class PlateauTournant;
+
 class SignalCube : public InputDetect
 {
 private:

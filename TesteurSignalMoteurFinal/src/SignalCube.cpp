@@ -38,7 +38,7 @@ void SignalCube::triggered(unsigned int gpio)
 		else 
 		{
 			// Plateau Tournant immobile
-			_plateauTournant->signalerProbleme("Signaux non conformes.");
+			_plateauTournant->signalerProbleme(1);
 			_plateauTournant->immobiliser();
 			return;
 		}		
@@ -55,7 +55,7 @@ void SignalCube::triggered(unsigned int gpio)
 		else 
 		{
 			// Plateau Tournant immobile
-			_plateauTournant->signalerProbleme("Signaux non conformes");
+			_plateauTournant->signalerProbleme(1);
 			_plateauTournant->immobiliser();
 			return;
 		}		
@@ -86,7 +86,7 @@ void SignalCube::decoder_ordre()
 		else
 		{
 			// Plateau Tournant immobile
-			_plateauTournant->signalerProbleme("deux ordres horaires successifs");
+			_plateauTournant->signalerProbleme(2);
 			_plateauTournant->immobiliser();
 		}
 	}
@@ -107,7 +107,7 @@ void SignalCube::decoder_ordre()
 		else
 		{
 			// Plateau Tournant immobile
-			_plateauTournant->signalerProbleme("deux ordres antihoraires successifs");
+			_plateauTournant->signalerProbleme(3);
 			_plateauTournant->immobiliser();
 		}
 	}

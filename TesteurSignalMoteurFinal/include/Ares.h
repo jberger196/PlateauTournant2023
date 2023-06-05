@@ -1,7 +1,11 @@
+#include <exception>
+#include <thread>
+#include <chrono>
+using namespace std;
+
 #ifndef __Ares_h__
 #define __Ares_h__
 
-#include "Cerbere.hpp"
 #include "Moteur.h"
 #include "HautParleur.h"
 #include "Signalisation.h"
@@ -11,42 +15,51 @@
 #include "Cube.h"
 #include "Signalement.h"
 #include "Consigne.hpp"
+#include "Journal.hpp"
 
 class Ares
 {
-	private: Cerbere* _laSecurite;
-	private: Moteur* _lePilote;
-	private: HautParleur* _leSonore;
-	private: Signalisation* _laSignalisation;
-	private: AlimentationBatterie* _lAlimentationB;
-	private: Sauvegarde* _laSauvegarde;
-	private: Position* _laPosition;
-    private: Consigne* _laConsigne;
-    private: Signalement* _leSignalement;
-	private: Journal* _leJournal;
-	private: float courant;
-	private: float seuiCourantChargeInvalide;
-	private: float seuilCourantChargeValide;
+private:
+	Moteur *_lePilote;
+	HautParleur *_leSonore;
+	Signalisation *_laSignalisation;
+	AlimentationBatterie *_lAlimentationB;
+	Sauvegarde *_laSauvegarde;
+	Position *_laPosition;
+	Consigne *_laConsigne;
+	Signalement *_leSignalement;
+	Journal *_leJournal;
 
-	public: void alerteChargeOn();
+public:
+	void alimenterBatterie();
 
-	public: void alerteChargeOff();
+public:
+	thread tAlimenterBatterie();
 
-    public: void tournerHoraire();
+public:
+	void commuterAlimentation();
 
-    public: void tournerAntiHoraire();
+public:
+	void mesurerCourantCharge();
 
-    public: void immobiliser();
+public:
+	void alerteChargeOn();
 
-	public: void alimenterBatterie();
+public:
+	void alerteChargeOff();
 
-	public: thread tAlimenterBatterie();
+public:
+	void tournerHoraire();
 
-	public: Ares(Cube aCube, Signalement aSignalement, Consigne aConsigne);
+public:
+	void tournerAntiHoraire();
 
-	public: Cerbere* getCerbere();
+public:
+	void immobiliser();
 
-	public: void setCerbere(Cerbere *aCerbere);
+public:
+	Ares(Signalement* aSignalement, Consigne* aConsigne, Journal* aJournal);
+	~Ares();
 };
 
 #endif

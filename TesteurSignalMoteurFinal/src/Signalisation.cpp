@@ -1,50 +1,109 @@
-#include <exception>
-using namespace std;
+#include "../include/Signalisation.h"
+#include <unistd.h>
 
-#include "Signalisation.h"
-#include "DigitalOut.h"
-
-bool Signalisation::getOn_off() {
-	return this->_on_off;
+Signalisation::Signalisation(int pinVoyantVert, int pinVoyantJaune, int pinVoyantRouge)
+{
+	this->voyantVert = new DigitalOut(pinVoyantVert);
+	this->voyantJaune = new DigitalOut(pinVoyantJaune);
+	this->voyantRouge = new DigitalOut(pinVoyantRouge);
+	this->clePbAlim = false;
+	chargeEnCours = false;
 }
 
-void Signalisation::setOn_off(bool aOn_off) {
-	this->_on_off = aOn_off;
+void Signalisation::signalerChargeBatterie()
+{
+	this->voyantVert->on();
 }
 
-void Signalisation::signalerProblèmeBatterie() {
-	throw "Not yet implemented";
+void Signalisation::finSignalerChargeBatterie()
+{
+	this->voyantVert->off();
 }
 
-void Signalisation::finirProblemeBatterie() {
-	throw "Not yet implemented";
+void Signalisation::signalerPbAlim()
+{
+	while (this->clePbAlim == false)
+	{
+		this->voyantJaune->on();
+		usleep(250000); // 0.25s
+		this->voyantJaune->off();
+		usleep(250000); // 0.25s
+	}
 }
 
-void Signalisation::signalerDémarragMoteur() {
-	throw "Not yet implemented";
+void Signalisation::finSignalerPbAlim()
+{
+	this->clePbAlim = true;
 }
 
-void Signalisation::setVoyantVert(DigitalOut aVoyantVert) {
-	this->_voyantVert = aVoyantVert;
+thread Signalisation::tSignalerPbAlim()
+{
+	return thread([this]
+				  { signalerPbAlim(); });
 }
 
-DigitalOut Signalisation::getVoyantVert() {
-	return this->_voyantVert;
+void Signalisation::signalerPbSecurite()
+{
+	this->voyantRouge->on();
 }
 
-void Signalisation::setVoyantJaune(DigitalOut aVoyantJaune) {
-	this->_voyantJaune = aVoyantJaune;
+void Signalisation::finSignalerPbSecurite()
+{
+	this->voyantRouge->off();
 }
 
-DigitalOut Signalisation::getVoyantJaune() {
-	return this->_voyantJaune;
+void Signalisation::signalerMiseEnMouvement()
+{
+	this->voyantVert->on();
+	std::this_thread::sleep_for(std::chrono::milliseconds(400));
+	this->voyantJaune->on();
+	std::this_thread::sleep_for(std::chrono::milliseconds(400));
+	this->voyantRouge->on();
+	std::this_thread::sleep_for(std::chrono::milliseconds(400));
 }
 
-void Signalisation::setVoyantRouge(DigitalOut aVoyantRouge) {
-	this->_voyantRouge = aVoyantRouge;
+void Signalisation::finirMiseEnMouvement()
+{
+	this->voyantVert->off();
+	this->voyantJaune->off();
+	this->voyantRouge->off();
 }
 
-DigitalOut Signalisation::getVoyantRouge() {
-	return this->_voyantRouge;
+void Signalisation::allumerVert()
+{
+	this->voyantVert->on();
 }
 
+void Signalisation::allumerJaune()
+{
+	this->voyantJaune->on();
+}
+
+void Signalisation::allumerRouge()
+{
+	this->voyantRouge->on();
+}
+
+void Signalisation::eteindreVert()
+{
+	this->voyantVert->off();
+}
+
+void Signalisation::eteindreJaune()
+{
+	this->voyantJaune->off();
+}
+
+void Signalisation::eteindreRouge()
+{
+	this->voyantRouge->off();
+}
+
+bool Signalisation::getChargeEnCours()
+{
+	return chargeEnCours;
+}
+void Signalisation::setChargeEnCours(bool charge)
+{
+	this->chargeEnCours = charge;
+}

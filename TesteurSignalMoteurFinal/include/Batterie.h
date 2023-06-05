@@ -2,8 +2,6 @@
 #ifndef __Batterie_h__
 #define __Batterie_h__
 
-class Batterie;
-
 class Batterie
 {
 	private: bool _enCharge;

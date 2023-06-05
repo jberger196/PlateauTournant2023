@@ -1,22 +1,28 @@
-#include <exception>
-using namespace std;
+#include "../include/Interrupteur.h"
 
-#include "Interrupteur.h"
-#include "DigitalOut.h"
-
-void Interrupteur::actionner() {
-	throw "Not yet implemented";
+Interrupteur::Interrupteur(unsigned int pin)
+{
+    actionneur = new GPIO::DigitalOut(pin);
 }
 
-void Interrupteur::desactiver() {
-	throw "Not yet implemented";
+void Interrupteur::actionner()
+{
+    actionneur->on();
+    on = true;
 }
 
-void Interrupteur::setActionneur(DigitalOut aActionneur) {
-	this->_actionneur = aActionneur;
+void Interrupteur::desactiver()
+{
+    actionneur->off();
+    on = false;
 }
 
-DigitalOut Interrupteur::getActionneur() {
-	return this->_actionneur;
+bool Interrupteur::getEtat()
+{
+    return on;
 }
 
+Interrupteur::~Interrupteur()
+{
+    
+}

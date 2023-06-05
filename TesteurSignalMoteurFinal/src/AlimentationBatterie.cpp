@@ -1,24 +1,43 @@
-#include <exception>
-#include <vector>
-using namespace std;
+#include "../include/AlimentationBatterie.h"
+#include <unistd.h>
 
-#include "AlimentationBatterie.h"
-#include "Interrupteur.h"
-#include "Charge.h"
-
-void AlimentationBatterie::alimenter() {
-	throw "Not yet implemented";
+AlimentationBatterie::AlimentationBatterie(unsigned int pin, uint8_t address)
+{
+    monInterrupteur = new Interrupteur(pin);
+    laCharge = new Charge(address);
 }
 
-void AlimentationBatterie::releverDonneesCharge() {
-	throw "Not yet implemented";
+void AlimentationBatterie::alimenter()
+{
+    monInterrupteur->actionner();
+
 }
 
-void AlimentationBatterie::couper() {
-	throw "Not yet implemented";
+void AlimentationBatterie::releverDonneesCharge()
+{
+    usleep(10000);
+    laCharge->lire();
 }
 
-void AlimentationBatterie::obtenirDonnees(float& aCourant, float& aTension) {
-	throw "Not yet implemented";
+void AlimentationBatterie::couper()
+{
+    monInterrupteur->desactiver();
 }
 
+void AlimentationBatterie::obtenirDonnees()
+{
+    courant = laCharge->getCourant();
+    tension = laCharge->getTension();
+}
+
+float AlimentationBatterie::getCourant()
+{
+    return courant;
+}
+
+float AlimentationBatterie::getTension()
+{
+    return tension;
+}
+
+AlimentationBatterie::~AlimentationBatterie(){}

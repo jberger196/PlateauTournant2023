@@ -1,8 +1,7 @@
 #include <exception>
 using namespace std;
 
-#include "Position.h"
-#include "InputDetect.h"
+#include "../include/Position.h"
 
 void Position::triggered(unsigned int aGpio) {
 	throw "Not yet implemented";

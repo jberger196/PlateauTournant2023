@@ -1,39 +1,49 @@
+#include "cppgpio/output.hpp"
+#include <thread>
+#include <chrono>
+
+using namespace GPIO; // vert 9, jaune 11, rouge 24
 using namespace std;
-
-#ifndef __Signalisation_h__
-#define __Signalisation_h__
-
-#include "../include/cppgpio/output.hpp"
-
 
 class Signalisation
 {
-	private: bool _on_off;
-	private: DigitalOut _voyantVert;
-	private: DigitalOut _voyantJaune;
-	private: DigitalOut _voyantRouge;
+public:
+	Signalisation(int pinVoyantVert, int pinVoyantJaune, int pinVoyantRouge);
+	/*bool getOn_off();
+	void setOn_off();*/
 
-	public: bool getOn_off();
+	void signalerChargeBatterie();
+	void finSignalerChargeBatterie();
 
-	public: void setOn_off(bool aOn_off);
+	void signalerPbAlim();
+	void finSignalerPbAlim();
+	thread tSignalerPbAlim();
 
-	public: void signalerProblemeBatterie();
+	void signalerPbSecurite();
+	void finSignalerPbSecurite();
 
-	public: void finirProblemeBatterie();
+	void signalerMiseEnMouvement();
+	void finirMiseEnMouvement();
 
-	public: void signalerDemarragMoteur();
+	/*void arretUrgence();
+	void finArretUrgence();*/
 
-	public: void setVoyantVert(DigitalOut aVoyantVert);
+	void allumerVert();
+	void allumerJaune();
+	void allumerRouge();
 
-	public: DigitalOut getVoyantVert();
+	void eteindreVert();
+	void eteindreJaune();
+	void eteindreRouge();
 
-	public: void setVoyantJaune(DigitalOut aVoyantJaune);
+	bool getChargeEnCours();
+	void setChargeEnCours(bool charge);
 
-	public: DigitalOut getVoyantJaune();
-
-	public: void setVoyantRouge(DigitalOut aVoyantRouge);
-
-	public: DigitalOut getVoyantRouge();
+private:
+	bool on_off;
+	DigitalOut *voyantVert;
+	DigitalOut *voyantJaune;
+	DigitalOut *voyantRouge;
+	bool clePbAlim;
+	bool chargeEnCours;
 };
-
-#endif

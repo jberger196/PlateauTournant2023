@@ -1,32 +1,26 @@
-#include <exception>
-using namespace std;
+#include "../include/Charge.hpp"
+#include <unistd.h>
 
-#include "Charge.h"
-void Charge::lire() {
-	throw "Not yet implemented";
+Charge::Charge(uint8_t address)
+{
+    leCapteur = new INA219(0.1, 2, address);
+    leCapteur->configure(RANGE_16V, GAIN_8_320MV, ADC_12BIT, ADC_12BIT);
 }
 
-void Charge::setLeCapteur(INA219 aLeCapteur) {
-	this->_leCapteur = aLeCapteur;
+void Charge::lire(){
+    laTension = leCapteur->voltage();
+    leCourant = leCapteur->current()/1000;
+    sleep(1);
 }
 
-INA219 Charge::getLeCapteur() {
-	return this->_leCapteur;
+float Charge::getTension()
+{
+    return laTension;
 }
 
-void Charge::setCourant(float aCourant) {
-	this->_courant = aCourant;
+float Charge::getCourant()
+{
+    return leCourant;
 }
 
-float Charge::getCourant() {
-	return this->_courant;
-}
-
-void Charge::setTension(float aTension) {
-	this->_tension = aTension;
-}
-
-float Charge::getTension() {
-	return this->_tension;
-}
-
+Charge::~Charge(){}
