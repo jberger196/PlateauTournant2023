@@ -35,22 +35,22 @@ void Ares::immobiliser()
 }
 void Ares::tournerAntiHoraire()
 {
-    _laSignalisation->signalerMiseEnMouvement();
+    
     _lePilote->tournerAntiHoraire(100);
 }
 void Ares::tournerHoraire()
 {
-    _laSignalisation->signalerMiseEnMouvement();
+    
     _lePilote->tournerHoraire(100);
 }
 void Ares::alimenterBatterie()
 {
     float iCourant;
     float tension;
-    float seuiCourantChargeInvalide;
+    float seuilCourantChargeInvalide;
     float seuilCourantChargeValide;
     usleep(2000000);
-    seuiCourantChargeInvalide = _laConsigne->getSeuiCourantChargeInvalide();
+    seuilCourantChargeInvalide = _laConsigne->getSeuilCourantChargeInvalide();
     seuilCourantChargeValide = _laConsigne->getSeuilCourantChargeValide();
     _lAlimentationB->alimenter();
     _lAlimentationB->releverDonneesCharge();
@@ -61,7 +61,7 @@ void Ares::alimenterBatterie()
     {
         seuilCourantChargeValide = seuilCourantChargeValide + _laConsigne->getConsoOrdinateurBord();
     }
-    else if ((iCourant < seuiCourantChargeInvalide) && !_leSignalement->getAlerteBatterie())
+    else if ((iCourant < seuilCourantChargeInvalide) && !_leSignalement->getAlerteBatterie())
     {
         _leJournal->enregistrerEvenement(Journal::EVENBATTERIE, iCourant);
         this->alerteChargeOn();
@@ -113,4 +113,8 @@ void Ares::mesurerCourantCharge()
 {
     _lAlimentationB->releverDonneesCharge();
     _lAlimentationB->obtenirDonnees();
+}
+
+void Ares::signalerMiseEnMouvement(){
+    _laSignalisation->signalerMiseEnMouvement();
 }

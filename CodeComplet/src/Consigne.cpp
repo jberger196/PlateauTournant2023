@@ -14,7 +14,7 @@ Consigne::Consigne()
 	seuilBlocageMin = 10;
 	seuilBlocageAlerte = 110;
 	seuilBlocageBranchement = 2;
-	seuiCourantChargeInvalide = 0.001;
+	seuilCourantChargeInvalide = 0.001;
 	seuilCourantChargeValide = 0.08;
 }
 
@@ -90,9 +90,9 @@ float Consigne::getTensionAlimentation()
 	return tensionAlimentation;
 }
 
-float Consigne::getSeuiCourantChargeInvalide()
+float Consigne::getSeuilCourantChargeInvalide()
 {
-	return this->seuiCourantChargeInvalide;
+	return this->seuilCourantChargeInvalide;
 }
 float Consigne::getSeuilCourantChargeValide()
 {

@@ -57,6 +57,8 @@ public:
 public:
 	void immobiliser();
 
+	void signalerMiseEnMouvement();
+
 public:
 	Ares(Signalement* aSignalement, Consigne* aConsigne, Journal* aJournal);
 	~Ares();

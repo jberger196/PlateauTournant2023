@@ -17,19 +17,14 @@ PlateauTournant::~PlateauTournant()
 }
 void PlateauTournant::tournerHoraire()
 {
-	if (_lessignalements->getAlertePresence())
+	if (!_lessignalements->getAlertePresence())
 	{
-	}
-	else
-	{
-		if (_lessignalements->getAlerteFixation())
-		{
-		}
-		else
+		if (!_lessignalements->getAlerteFixation())
 		{
 			estEnMouvementHoraire = true;
 			estEnMouvementAntiHoraire = false;
 			_laSecurite->setFinRotation(false);
+			_lOperation->signalerMiseEnMouvement();
 			_lOperation->tournerHoraire();
 			thread verifierCourant = _laSecurite->tVerifierCourant();
 			verifierCourant.detach();
@@ -38,19 +33,14 @@ void PlateauTournant::tournerHoraire()
 }
 void PlateauTournant::tournerAntiHoraire()
 {
-	if (_lessignalements->getAlertePresence())
+	if (!_lessignalements->getAlertePresence())
 	{
-	}
-	else
-	{
-		if (_lessignalements->getAlerteFixation())
-		{
-		}
-		else
+		if (!_lessignalements->getAlerteFixation())
 		{
 			estEnMouvementHoraire = false;
 			estEnMouvementAntiHoraire = true;
 			_laSecurite->setFinRotation(false);
+			_lOperation->signalerMiseEnMouvement();
 			_lOperation->tournerAntiHoraire();
 			thread verifierCourant = _laSecurite->tVerifierCourant();
 			verifierCourant.detach();

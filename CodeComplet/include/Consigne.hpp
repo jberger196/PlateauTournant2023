@@ -25,7 +25,7 @@ private:
     /// @brief seuil de détection d'un problème de branchement en mA
     float seuilBlocageBranchement;
     /// @brief seuil en dessous duquel une erreur de connexion est établie
-    float seuiCourantChargeInvalide;
+    float seuilCourantChargeInvalide;
     /// @brief seuil en dessus duquel la charge est en cours (0,5 A si SegmentVol allumé; 0,08 A si SegmentVol éteint
     ///- fonctionnement normal => redémarrage par carte gestion charge quand la charge est terminée)
     float seuilCourantChargeValide;
@@ -66,7 +66,7 @@ public:
     float getValMinMot();
     float getValMaxMot();
     float getValBranchementMot();
-    float getSeuiCourantChargeInvalide();
+    float getSeuilCourantChargeInvalide();
     float getSeuilCourantChargeValide();
     float getConsoOrdinateurBord();
 
