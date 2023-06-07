@@ -5,8 +5,6 @@ using namespace std;
 #ifndef __Journal_h__
 #define __Journal_h__
 
-class Journal;
-
 class Journal
 {
 	private: string _cheminBDD;
