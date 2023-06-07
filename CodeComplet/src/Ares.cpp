@@ -53,6 +53,7 @@ void Ares::alimenterBatterie()
     seuilCourantChargeInvalide = _laConsigne->getSeuilCourantChargeInvalide();
     seuilCourantChargeValide = _laConsigne->getSeuilCourantChargeValide();
     _lAlimentationB->alimenter();
+    usleep(2000000);
     _lAlimentationB->releverDonneesCharge();
     _lAlimentationB->obtenirDonnees();
     iCourant = _lAlimentationB->getCourant();
