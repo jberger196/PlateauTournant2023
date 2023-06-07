@@ -1,3 +1,7 @@
+
+#ifndef __Moteur_h__
+#define __Moteur_h__
+
 #include "cppgpio/output.hpp"
 #include <unistd.h>
 
@@ -5,24 +9,32 @@ using namespace GPIO;
 
 class Moteur{
     public:
-      Moteur(unsigned int pinEnable, unsigned int pinPhase, unsigned int periode = 1024, unsigned int rapportCyclique = 0);
+      /// @brief Constructeur du moteur
+      /// @param pinPWM broche sur laquelle est branchée l'entrée PWM du module pont en H
+      /// @param pinSensMoteur broche sur laquelle est branchée l'entrée Direction du module pont en H
+      /// @param periode période souhaitée pour la PWM en dixième de ms
+      Moteur(unsigned int pinPWM=16, unsigned int pinSensMoteur=17, unsigned int periode = 7);
       ~Moteur();
-      void tournerHoraire(unsigned int rapportCyclique); //fais tourner le moteur dans un sens avec l'attribut ratio
-      void tournerAntiHoraire(unsigned int rapportCyclique); //fais tourner le moteur dans l'autre sens avec l'attribut ratio
+      /// @brief lancement de la rotation horaire du moteur à une vitesse déterminée par le rapport cyclique
+      /// @param rapportCyclique en %
+      void tournerHoraire(unsigned int rapportCyclique); 
+      /// @brief lancement de la rotation antihoraire du moteur à une vitesse déterminée par le rapport cyclique
+      /// @param rapportCyclique en %      
+      void tournerAntiHoraire(unsigned int rapportCyclique); 
       void arretMoteur(); //eteint phase et enable
-      void modifierEtatPhase(bool etat); //modifie l'état de phase
-      void modifierValeurRatio(unsigned int rapportCyclique); //modifie la valeur du ratio du PWM
+      //void fonction();
+      void arretUrgence();
       bool getEstEnMouvement(); //getter de l'attribut estEnMouvement
-      void setEstEnMouvement(bool etat); //setter setEstEnMouvement, pas vraiment utile
-      int getRatio(); //getter de l'attribut ratio, pas vraiment utile
-      void setRatio(unsigned int rapportCyclique); //setter de l'attribut ratio, pas vraiment utile
+      void setEstEnMouvement(bool etat); //setter setEstEnMouvement
     
     private:
+        void modifierSensMoteur(bool etat); //modifie l'état de phase
         bool estEnMouvement;
         DigitalOut* objPhase;
         PWMOut* objEnablePWM;
         unsigned int periode;
-        unsigned int rapportCyclique;
+        unsigned int ratio;
 };
 
 
+#endif
