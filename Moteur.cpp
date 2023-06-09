@@ -73,6 +73,7 @@ void Moteur::arretUrgence(){
         this->objEnablePWM->set_ratio(valRatio);
         usleep(100000); //augmentation du PWM toutes les 10ms, 10*valRatioms d'augmentation de la PWM au total
     }
+    this->arretMoteur();
 }
 
 void Moteur::modifierSensMoteur(bool etat){ //modifie l'état de phase
