@@ -69,3 +69,11 @@ void Signalisation::finirMiseEnMouvement()
 	std::this_thread::sleep_for(std::chrono::milliseconds(400));
 	this->voyantRouge->off();
 }
+
+void Signalisation::allumerJaune(){
+	this->voyantJaune->on();
+}
+
+void Signalisation::eteindreJaune(){
+	this->voyantJaune->off();
+}
