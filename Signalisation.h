@@ -29,6 +29,9 @@ public:
 	bool getChargeEnCours();
 	void setChargeEnCours(bool charge);
 
+	void allumerJaune();
+	void eteindreJaune();
+
 private:
 	DigitalOut *voyantVert;
 	DigitalOut *voyantJaune;
